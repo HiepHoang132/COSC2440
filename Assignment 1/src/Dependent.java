@@ -2,6 +2,8 @@
  * @author <Hoang Hua Hiep - s3979137>
  */
 
+import java.util.List;
+
 /**
  * The Dependent class represents a dependent in an insurance system.
  * It extends the Customer class and includes a reference to the policyholder.
@@ -50,5 +52,45 @@ public class Dependent extends Customer{
                 ", fullName='" + getFullName() + '\'' +
                 ", policyHolder='" + getPolicyHolderName() +
                 '}';
+    }
+
+    @Override
+    public void add(Claim claim) {
+        claims.add(claim);
+    }
+
+    @Override
+    public void update(String id, Claim claim) {
+        for(int i = 0; i < claims.size(); i++){
+            if(claims.get(i).getId().equals(id)){
+                claims.set(i, claim);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void delete(String id) {
+        for(int i = 0; i < claims.size(); i++){
+            if(claims.get(i).getId().equals(id)){
+                claims.remove(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public Claim getOne(String id) {
+        for(Claim claim: claims){
+            if(claim.getId().equals(id)){
+                return claim;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Claim> getAll() {
+        return claims;
     }
 }

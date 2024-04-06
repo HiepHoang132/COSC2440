@@ -68,9 +68,9 @@ public class PolicyHolder extends Customer{
      */
     public void makeClaim(Customer insuredPerson, double claimAmount, String receiverBankingInfo) {
         Claim newClaim = new Claim(insuredPerson, claimAmount, receiverBankingInfo);
-        this.getClaims().add(newClaim);
+        this.add(newClaim);
         for (Dependent dependent : this.getDependents()) {
-            dependent.getClaims().add(newClaim);
+            dependent.add(newClaim);
         }
     }
 
@@ -82,5 +82,45 @@ public class PolicyHolder extends Customer{
                 ", insuranceCard=" + getInsuranceCard() +
                 ", dependents=" + getDependentName() +
                 '}';
+    }
+
+    @Override
+    public void add(Claim claim) {
+        claims.add(claim);
+    }
+
+    @Override
+    public void update(String id, Claim claim) {
+        for(int i = 0; i < claims.size(); i++){
+            if(claims.get(i).getId().equals(id)){
+                claims.set(i, claim);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void delete(String id) {
+        for(int i = 0; i < claims.size(); i++){
+            if(claims.get(i).getId().equals(id)){
+                claims.remove(i);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public Claim getOne(String id) {
+        for(Claim claim: claims){
+            if(claim.getId().equals(id)){
+                return claim;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Claim> getAll() {
+        return claims;
     }
 }

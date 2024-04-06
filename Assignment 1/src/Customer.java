@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * It implements the Utilities interface and
  * includes fields for id, fullName, insuranceCard, and claims.
  */
-public abstract class Customer implements Utilities {
+public abstract class Customer implements Utilities, ClaimProcessManager{
     private String id;
     private String fullName;
     private InsuranceCard insuranceCard;
-    private List<Claim> claims;
+    protected List<Claim> claims;
 
     /**
      * Default constructor for the Customer class.
@@ -79,10 +79,6 @@ public abstract class Customer implements Utilities {
         this.insuranceCard = insuranceCard;
         insuranceCard.setCardHolder(this);
         return true;
-    }
-
-    public List<Claim> getClaims() {
-        return claims;
     }
 
     public String getClaimsText(){
