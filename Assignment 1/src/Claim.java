@@ -6,7 +6,7 @@ import java.util.List;
  * @author <Hoang Hua Hiep - s3979137>
  */
 
-public class Claim implements Utilities{
+public class Claim{
     private String id;
     private Date claimDate;
     private Customer insuredPerson;
@@ -37,7 +37,7 @@ public class Claim implements Utilities{
      * @param receiverBankingInfo The banking information of the receiver.
      */
     public Claim(Customer insuredPerson, double claimAmount, String receiverBankingInfo) {
-        this.id = generateID("f-", 10);
+        this.id = Utilities.generateID("f-", 10);
         this.claimDate = null;
         this.insuredPerson = insuredPerson;
         this.cardNumber = insuredPerson.getInsuranceCard();

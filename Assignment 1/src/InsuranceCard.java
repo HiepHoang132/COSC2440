@@ -9,7 +9,7 @@ import java.util.Date;
  * It includes a card number, a reference to the cardholder,
  * the policy owner's name, and the expiration date of the card.
  */
-public class InsuranceCard implements Utilities{
+public class InsuranceCard{
     private String cardNumber;
     private Customer cardHolder;
     private String policyOwner;
@@ -23,7 +23,7 @@ public class InsuranceCard implements Utilities{
     }
 
     public InsuranceCard(String policyOwner, Date expirationDate) {
-        this.cardNumber = generateID("", 10);
+        this.cardNumber = Utilities.generateID("", 10);
         this.policyOwner = policyOwner;
         this.expirationDate = new Date();
     }
