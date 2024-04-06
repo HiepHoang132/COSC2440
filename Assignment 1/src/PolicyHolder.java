@@ -28,8 +28,10 @@ public class PolicyHolder extends Customer{
 
     public String getDependentName(){
         StringBuilder sb = new StringBuilder();
-        for(Dependent dependent: dependents){
-            sb.append(dependent.getFullName()).append(", ");
+
+        for(int i = 0; i < dependents.size(); i++){
+            String fullName = dependents.get(i).getFullName();
+            sb.append("Dependent ").append(i+1).append(": ").append(fullName).append("\n");
         }
 
         // Remove the trailing comma and space
@@ -84,11 +86,9 @@ public class PolicyHolder extends Customer{
 
     @Override
     public String toString() {
-        return "PolicyHolder{" +
-                "id='" + getId() + '\'' +
-                ", fullName='" + getFullName() + '\'' +
-                ", insuranceCard=" + getInsuranceCard() +
-                ", dependents=" + getDependentName() +
-                '}';
+        return "Policy Holder ID: " + getId() + "\n" +
+                "Full Name: " + getFullName() + "\n" +
+                "Insurance Card: " + getInsuranceCard() + "\n" +
+                "Dependents: \n" + getDependentName();
     }
 }

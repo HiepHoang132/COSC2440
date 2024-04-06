@@ -53,6 +53,7 @@ public class Claim{
     }
 
     public String getClaimDate() {
+        
         if(claimDate == null){
             return "The customer has not claimed yet.";
         }
@@ -145,15 +146,14 @@ public class Claim{
 
     @Override
     public String toString() {
-        return "Claim{" +
-                "id='" + getId() + '\'' +
-                ", claimDate='" + getClaimDate() + '\'' +
-                ", insuredPerson='" + getInsuredPersonName() + '\'' +
-                ", cardNumber='" + getCardNumber() + '\'' +
-                ", examDate='" + getExamDate() + '\'' +
-                ", documents=" + getDocumentText() +
-                ", claimAmount=" + getClaimAmount()+
-                ", status='" + getStatus() + '\'' +
-                ", receiverBankingInfo='" + receiverBankingInfo + '\'';
+        return "Claim ID: " + getId() + "\n" +
+                "Claim Date: " + getClaimDate() + "\n" +
+                "Insured Person: " + getInsuredPersonName() + "\n" +
+                "Card Number: " + getCardNumber() + "\n" +
+                "Exam Date: " + getExamDate() + "\n" +
+                "Documents: \n" + getDocumentText() + "\n" +
+                "Claim Amount: " + getClaimAmount() + "\n" +
+                "Status: " + getStatus() + "\n" +
+                "Receiver Banking Info: " + getReceiverBankingInfo() + "\n";
     }
 }

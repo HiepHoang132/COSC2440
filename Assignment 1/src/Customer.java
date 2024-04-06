@@ -87,8 +87,8 @@ public abstract class Customer{
 
     public String getClaimsText(){
         StringBuilder sb = new StringBuilder();
-        for(Claim claim: claims){
-            sb.append(claim).append(", ");
+        for(int i = 0; i < claims.size(); i++){
+            sb.append("Claim ").append(i+1).append(": ").append(claims.get(i)).append("\n");
         }
 
         // Remove the trailing comma and space

@@ -45,8 +45,7 @@ public class Dependent extends Customer{
     }
     @Override
     public String toString() {
-        return "Dependent{" +
-                "id='" + getId() + '\'' +
+        return "Dependent ID: " + getId() + '\'' +
                 ", fullName='" + getFullName() + '\'' +
                 ", policyHolder='" + getPolicyHolderName() +
                 '}';
