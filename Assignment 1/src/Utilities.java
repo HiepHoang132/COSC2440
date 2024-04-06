@@ -31,16 +31,30 @@ public class Utilities {
    }
 
    /**
-    * This method is used to find and return a Claim object from a list of claims based on its ID.
+    * This method is used to get an item from a list by its ID. The method accepts a list of items and an ID as parameters.
+    * It iterates over the list and checks if the item is an instance of Claim, Customer, or InsuranceCard.
+    * If the item is an instance of Claim or Customer, it compares the item's ID with the provided ID.
+    * If the item is an instance of InsuranceCard, it compares the item's card number with the provided ID.
+    * If a match is found, the item is returned. If no match is found after iterating over the entire list, the method returns null.
     *
-    * @param claims This is the list of Claim objects from which to find the claim.
-    * @param id This is the ID of the claim to find.
-    * @return Claim This returns the Claim object with the matching ID. If no claim with the matching ID is found, it returns null.
+    * @param list The list of items to search.
+    * @param id The ID to search for.
+    * @return The item with the matching ID, or null if no match is found.
     */
-   public static Claim getClaimById(List<Claim> claims, String id) {
-      for (Claim claim : claims) {
-         if (claim.getId().equals(id)) {
-            return claim;
+   public static <Type> Type getById(List<Type> list, String id) {
+      for (Type item : list) {
+         if (item instanceof Claim) {
+            if (((Claim) item).getId().equals(id)) {
+               return item;
+            }
+         } else if (item instanceof Customer) {
+            if (((Customer) item).getId().equals(id)) {
+               return item;
+            }
+         } else if (item instanceof InsuranceCard) {
+            if (((InsuranceCard) item).getCardNumber().equals(id)) {
+               return item;
+            }
          }
       }
       return null;

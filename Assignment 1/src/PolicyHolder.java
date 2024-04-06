@@ -11,18 +11,15 @@ import java.util.ArrayList;
  */
 public class PolicyHolder extends Customer{
     private List<Dependent> dependents;
-    private ClaimService claimService;
 
     public PolicyHolder() {
         super();
         dependents = null;
-        this.claimService = ClaimService.getInstance();
     }
 
     public PolicyHolder(String fullName) {
         super(fullName);
         this.dependents = new ArrayList<Dependent>();
-        this.claimService = ClaimService.getInstance();
     }
 
     public List<Dependent> getDependents() {
@@ -82,7 +79,7 @@ public class PolicyHolder extends Customer{
         }
 
         // Add the new claim to the claimService
-        this.claimService.add(newClaim);
+        ClaimService.getInstance().add(newClaim);
     }
 
     @Override

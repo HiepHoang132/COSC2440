@@ -1,6 +1,10 @@
 import java.util.List;
 
 /**
+ * @author <Hoang Hua Hiep - s3979137>
+ */
+
+/**
  * This interface defines the operations that can be performed on a Claim.
  */
 public interface ClaimProcessManager{

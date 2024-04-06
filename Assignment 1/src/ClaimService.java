@@ -32,7 +32,7 @@ import java.util.List;
 
     @Override
     public void updateClaimDate(String id, String claimDate) {
-        Claim claim = Utilities.getClaimById(claims, id);
+        Claim claim = Utilities.getById(claims, id);
         if(claim != null){
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -45,7 +45,7 @@ import java.util.List;
 
     @Override
     public void updateExamDate(String id, String examDate) {
-        Claim claim = Utilities.getClaimById(claims, id);
+        Claim claim = Utilities.getById(claims, id);
         if(claim != null){
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             try {
@@ -58,7 +58,7 @@ import java.util.List;
 
     @Override
     public void updateStatus(String id, String status){
-        Claim claim = Utilities.getClaimById(claims, id);
+        Claim claim = Utilities.getById(claims, id);
         if(claim != null){
             claim.setStatus(status);
         }
@@ -66,17 +66,15 @@ import java.util.List;
 
     @Override
     public void delete(String id) {
-        for(int i = 0; i < claims.size(); i++){
-            if(claims.get(i).getId().equals(id)){
-                claims.remove(i);
-                break;
-            }
+        Claim claim = Utilities.getById(claims, id);
+        if(claim != null){
+            claims.remove(claim);
         }
     }
 
     @Override
     public Claim getOne(String id) {
-        return Utilities.getClaimById(claims, id);
+        return Utilities.getById(claims, id);
     }
 
     @Override
