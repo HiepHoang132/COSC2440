@@ -11,15 +11,18 @@ import java.util.ArrayList;
  */
 public class PolicyHolder extends Customer{
     private List<Dependent> dependents;
+    private ClaimService claimService;
 
     public PolicyHolder() {
         super();
         dependents = null;
+        this.claimService = ClaimService.getInstance();
     }
 
     public PolicyHolder(String fullName) {
         super(fullName);
         this.dependents = new ArrayList<Dependent>();
+        this.claimService = ClaimService.getInstance();
     }
 
     public List<Dependent> getDependents() {
@@ -60,18 +63,26 @@ public class PolicyHolder extends Customer{
     }
 
     /**
-     * This method is used to make a claim on behalf of the policyHolder.
+     * This method is used to make a claim on behalf of the policyHolder and its dependents.
      *
      * @param insuredPerson The customer who is insured and making the claim.
      * @param claimAmount The amount that the insured person is claiming.
      * @param receiverBankingInfo The banking information of the receiver.
      */
     public void makeClaim(Customer insuredPerson, double claimAmount, String receiverBankingInfo) {
+        // Create a new claim with the provided parameters
         Claim newClaim = new Claim(insuredPerson, claimAmount, receiverBankingInfo);
+
+        // Add the new claim to the list of claims of the policyHolder
         this.getClaims().add(newClaim);
+
+        // Add the new claim to the list of claims of each dependent of the policyHolder
         for (Dependent dependent : this.getDependents()) {
             dependent.getClaims().add(newClaim);
         }
+
+        // Add the new claim to the claimService
+        this.claimService.add(newClaim);
     }
 
     @Override
