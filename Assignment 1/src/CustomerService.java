@@ -26,6 +26,14 @@ public class CustomerService implements ProcessManager<Customer, String>{
     public void delete(String id) {
         Customer customer = Utilities.getById(customers, id);
         if (customer != null) {
+            if(customer instanceof Dependent dependent){
+                dependent.getPolicyHolder().getDependents().remove(dependent);
+            }
+            else if (customer instanceof PolicyHolder policyHolder){
+                for (Dependent dependent : policyHolder.getDependents()) {
+                    dependent.setPolicyHolder(null);
+                }
+            }
             customers.remove(customer);
         }
     }

@@ -52,7 +52,7 @@ public abstract class Customer{
 
     public String getInsuranceCard() {
         if(insuranceCard == null){
-            return "No insurance card assigned";
+            return "None";
         }
         return insuranceCard.getCardNumber();
     }

@@ -39,15 +39,15 @@ public class Dependent extends Customer{
 
     public String getPolicyHolderName(){
         if(policyHolder == null){
-            return "No policy holder assigned";
+            return "None";
         }
         return policyHolder.getFullName();
     }
     @Override
     public String toString() {
-        return "Dependent ID: " + getId() + '\'' +
-                ", fullName='" + getFullName() + '\'' +
-                ", policyHolder='" + getPolicyHolderName() +
-                '}';
+        return "\nDependent ID: " + getId() +
+                "\nFullName: " + getFullName() +
+                "\nPolicy Holder: " + getPolicyHolderName()
+                ;
     }
 }

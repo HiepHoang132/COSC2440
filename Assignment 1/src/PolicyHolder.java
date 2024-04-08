@@ -29,17 +29,19 @@ public class PolicyHolder extends Customer{
     public String getDependentName(){
         StringBuilder sb = new StringBuilder();
 
-        for(int i = 0; i < dependents.size(); i++){
-            String fullName = dependents.get(i).getFullName();
-            sb.append("Dependent ").append(i+1).append(": ").append(fullName).append("\n");
+        for (Dependent dependent : dependents) {
+            String fullName = dependent.getFullName();
+            sb.append(fullName).append(",");
         }
 
-        // Remove the trailing comma and space
-        if (!sb.isEmpty()) {
-            sb.setLength(sb.length() - 2);
-        } else {
-            sb.append("No dependents assigned");
+        // Remove the trailing commas
+        if(!(sb.isEmpty())){
+            sb.deleteCharAt(sb.length() - 1);
         }
+        else {
+            sb.append("None");
+        }
+
         return sb.toString();
     }
 
@@ -86,9 +88,9 @@ public class PolicyHolder extends Customer{
 
     @Override
     public String toString() {
-        return "Policy Holder ID: " + getId() + "\n" +
-                "Full Name: " + getFullName() + "\n" +
-                "Insurance Card: " + getInsuranceCard() + "\n" +
-                "Dependents: \n" + getDependentName();
+        return "\nPolicy Holder ID: " + getId() +
+                "\nFull Name: " + getFullName() +
+                "\nInsurance Card: " + getInsuranceCard() +
+                "\nDependents: " + getDependentName();
     }
 }

@@ -4,6 +4,7 @@
 
 public class Main {
     public static void main(String[] args) {
-
+        CustomerController controller = new CustomerController(new CustomerViewText());
+        controller.eventLoop();
     }
 }
