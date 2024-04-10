@@ -70,7 +70,7 @@ public class PolicyHolder extends Customer{
      * @param claimAmount The amount that the insured person is claiming.
      * @param receiverBankingInfo The banking information of the receiver.
      */
-    public void makeClaim(Customer insuredPerson, double claimAmount, String receiverBankingInfo) {
+    public void makeClaim(Customer insuredPerson, String claimAmount, String receiverBankingInfo) {
         // Create a new claim with the provided parameters
         Claim newClaim = new Claim(insuredPerson, claimAmount, receiverBankingInfo);
 

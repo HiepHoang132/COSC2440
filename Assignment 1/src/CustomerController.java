@@ -40,7 +40,7 @@ public class CustomerController {
                     break;
                 case "3":
                 case "4":
-                    System.out.print("Enter the customer ID to delete: ");
+                    System.out.print("Enter the customer ID: ");
                     customerId = scanner.nextLine();
                     customer = customerService.getOne(customerId);
                     if (customer != null) {
@@ -49,7 +49,6 @@ public class CustomerController {
                             view.display(customer);
                         } else {
                             customerService.delete(customerId);
-
                             System.out.println("Customer with ID " + customerId + " has been deleted.");
                         }
                     } else {
@@ -69,41 +68,44 @@ public class CustomerController {
     public void addNewCustomer(){
         Scanner scanner = DataInput.getDataInput().getScanner();
         String answer = "Y";
+
         while(answer.equalsIgnoreCase("Y")){
             Map<String, String> data = view.displayNewCustomerForm();
-            String customer_type = data.get(CustomerView.CUSTOMER_TYPE);
-            String full_name = data.get(CustomerView.FULL_NAME);
-
-            switch (customer_type) {
+            String customerType = data.get(CustomerView.CUSTOMER_TYPE);
+            switch(customerType){
                 case "P":
-                    customer = new PolicyHolder(full_name);
-                    customerService.add(customer);
-                    System.out.println("Do you want to add a dependent to this policy holder? (Y/N): ");
-                    answer = scanner.nextLine();
-                    if (answer.equalsIgnoreCase("Y")) {
-                        System.out.println("Enter dependent's full name: ");
-                        Dependent dependent = new Dependent(scanner.nextLine());
-                        ((PolicyHolder) customer).addDependent(dependent);
-                        customerService.add(dependent);
-                    }
+                    String policyName = data.get(CustomerView.POLICY_HOLDER_NAME);
+                    PolicyHolder policyHolder = new PolicyHolder(policyName);
+                    customerService.add(policyHolder);
+
+                    String dependentName = data.get(CustomerView.DEPENDENT_NAME);
+                    Dependent dependent = new Dependent(dependentName);
+                    customerService.add(dependent);
+
+                    policyHolder.addDependent(dependent);
+                    dependent.setPolicyHolder(policyHolder);
                     break;
                 case "D":
-                    Dependent dependent = new Dependent(full_name);
-                    System.out.println("Enter the policy holder ID for this dependent: ");
-                    String policyHolderId = scanner.nextLine();
-                    Customer customer = Utilities.getById(customerService.getAll(), policyHolderId);
-                    dependent.setPolicyHolder((PolicyHolder) customer);
-                    customerService.add(dependent);
+                    String dependentName2 = data.get(CustomerView.DEPENDENT_NAME);
+                    Dependent dependent2 = new Dependent(dependentName2);
+                    customerService.add(dependent2);
+
+                    String policyId = data.get(CustomerView.POLICY_ID);
+                    Customer customer = customerService.getOne(policyId);
+                    if(customer instanceof PolicyHolder){
+                        ((PolicyHolder) customer).addDependent(dependent2);
+                        dependent2.setPolicyHolder((PolicyHolder) customer);
+                    } else if (customer instanceof Dependent) {
+                        System.out.println("This is a dependent ID. Cannot add a dependent to another dependent.");
+                    }
+                    else{
+                        System.out.println("No policy holder found with the provided ID.");
+                    }
                     break;
-                default:
-                    System.out.println("Invalid customer type. Please enter P for Policy Holder or D for Dependent.");
-                    continue;
             }
-
-            System.out.println("Successfully added the customer");
-            System.out.println("Do you want to add another customer? (Y/N): ");
-            answer = scanner.nextLine();
+        System.out.println("Successfully added the customer");
+        System.out.println("Do you want to add another customer? (Y/N): ");
+        answer = scanner.nextLine();
         }
-
     }
 }

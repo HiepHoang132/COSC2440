@@ -35,8 +35,25 @@ public class CustomerViewText extends CustomerView {
         } while (isValid);
 
         data.put(CUSTOMER_TYPE, customer_type);
-        System.out.println("Enter full name: ");
-        data.put(FULL_NAME, scanner.nextLine());
+
+        switch(customer_type){
+            case "P":
+                System.out.println("Enter policy holder's full name: ");
+                data.put(POLICY_HOLDER_NAME, scanner.nextLine());
+                System.out.println("Do you want to add a dependent to this policy holder? (Y/N): ");
+                if(scanner.nextLine().equalsIgnoreCase("Y")){
+                    System.out.println("Enter dependent's full name: ");
+                    data.put(DEPENDENT_NAME, scanner.nextLine());
+                }
+                break;
+            case "D":
+                System.out.println("Enter dependent's full name: ");
+                data.put(DEPENDENT_NAME, scanner.nextLine());
+                System.out.println("Enter the policy holder ID for this dependent: ");
+                data.put(POLICY_ID, scanner.nextLine());
+                break;
+        }
+
         return data;
     }
 }

@@ -13,7 +13,7 @@ public class Claim{
     private String cardNumber;
     private Date examDate;
     private List<String> documents;
-    private double claimAmount;
+    private String claimAmount;
     private String status;
     private String receiverBankingInfo;
 
@@ -24,7 +24,7 @@ public class Claim{
         this.cardNumber = null;
         this.examDate = null;
         this.documents = null;
-        this.claimAmount = 0;
+        this.claimAmount = null;
         this.status = null;
         this.receiverBankingInfo = null;
     }
@@ -36,7 +36,7 @@ public class Claim{
      * @param claimAmount The amount that the insured person is claiming.
      * @param receiverBankingInfo The banking information of the receiver.
      */
-    public Claim(Customer insuredPerson, double claimAmount, String receiverBankingInfo) {
+    public Claim(Customer insuredPerson, String claimAmount, String receiverBankingInfo) {
         this.id = Utilities.generateID("f-", 10);
         this.claimDate = null;
         this.insuredPerson = insuredPerson;
@@ -53,7 +53,6 @@ public class Claim{
     }
 
     public String getClaimDate() {
-        
         if(claimDate == null){
             return "The customer has not claimed yet.";
         }
@@ -68,7 +67,7 @@ public class Claim{
         return insuredPerson;
     }
 
-    public String getInsuredPersonName() {
+    public String getInsuredPersonName() {  
         if(insuredPerson == null){
             return "No insured person assigned";
         }
@@ -116,11 +115,11 @@ public class Claim{
         return sb.toString();
     }
 
-    public double getClaimAmount() {
+    public String getClaimAmount() {
         return claimAmount;
     }
 
-    public void setClaimAmount(double claimAmount) {
+    public void setClaimAmount(String claimAmount) {
         this.claimAmount = claimAmount;
     }
 
