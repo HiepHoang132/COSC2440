@@ -27,8 +27,8 @@ public class CustomerViewText extends CustomerView {
             System.out.println("\nYou are adding a new customer");
             System.out.println("-----------------------------");
             System.out.println("Enter customer type (P for Policy Holder, D for Dependent): ");
-            customer_type = scanner.nextLine();
-            isValid = !customer_type.equalsIgnoreCase("P") && !customer_type.equalsIgnoreCase("D");
+            customer_type = scanner.nextLine().toUpperCase();
+            isValid = !customer_type.equals("P") && !customer_type.equals("D");
             if (isValid) {
                 System.out.println("Invalid customer type. Please enter P for Policy Holder or D for Dependent.");
             }
@@ -40,11 +40,6 @@ public class CustomerViewText extends CustomerView {
             case "P":
                 System.out.println("Enter policy holder's full name: ");
                 data.put(POLICY_HOLDER_NAME, scanner.nextLine());
-                System.out.println("Do you want to add a dependent to this policy holder? (Y/N): ");
-                if(scanner.nextLine().equalsIgnoreCase("Y")){
-                    System.out.println("Enter dependent's full name: ");
-                    data.put(DEPENDENT_NAME, scanner.nextLine());
-                }
                 break;
             case "D":
                 System.out.println("Enter dependent's full name: ");

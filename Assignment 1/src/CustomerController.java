@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -6,13 +7,16 @@ import java.util.Scanner;
  */
 
 public class CustomerController {
-    private Customer customer;
-    private CustomerView view;
+    private CustomerView customerView;
+    private InsuranceCardView insuranceCardView;
     private CustomerService customerService;
+    private InsuranceCardService insuranceCardService;
 
-    public CustomerController(CustomerView view) {
-        this.view = view;
+    public CustomerController(CustomerView customerView, InsuranceCardView insuranceCardView){
+        this.customerView = customerView;
+        this.insuranceCardView = insuranceCardView;
         this.customerService = CustomerService.getInstance();
+        this.insuranceCardService = InsuranceCardService.getInstance();
     }
 
     public void eventLoop() {
@@ -36,7 +40,7 @@ public class CustomerController {
                     break;
                 case "2":
                     System.out.print("\nAll customers: ");
-                    customerService.getAll().forEach(view::display);
+                    customerService.getAll().forEach(customerView::display);
                     break;
                 case "3":
                 case "4":
@@ -46,7 +50,7 @@ public class CustomerController {
                     if (customer != null) {
                         if (choice.equals("3")) {
                             System.out.print("\nCustomer found: ");
-                            view.display(customer);
+                            customerView.display(customer);
                         } else {
                             customerService.delete(customerId);
                             System.out.println("Customer with ID " + customerId + " has been deleted.");
@@ -70,42 +74,60 @@ public class CustomerController {
         String answer = "Y";
 
         while(answer.equalsIgnoreCase("Y")){
-            Map<String, String> data = view.displayNewCustomerForm();
-            String customerType = data.get(CustomerView.CUSTOMER_TYPE);
+            Map<String, String> customerData = customerView.displayNewCustomerForm();
+            String customerType = customerData.get(CustomerView.CUSTOMER_TYPE);
+
             switch(customerType){
                 case "P":
-                    String policyName = data.get(CustomerView.POLICY_HOLDER_NAME);
+                    String policyName = customerData.get(CustomerView.POLICY_HOLDER_NAME);
                     PolicyHolder policyHolder = new PolicyHolder(policyName);
                     customerService.add(policyHolder);
+                    addInsuranceCard(policyHolder);
 
-                    String dependentName = data.get(CustomerView.DEPENDENT_NAME);
-                    Dependent dependent = new Dependent(dependentName);
-                    customerService.add(dependent);
-
-                    policyHolder.addDependent(dependent);
-                    dependent.setPolicyHolder(policyHolder);
+                    customerView.display(policyHolder);
+                    System.out.println("Successfully added the customer");
                     break;
                 case "D":
-                    String dependentName2 = data.get(CustomerView.DEPENDENT_NAME);
-                    Dependent dependent2 = new Dependent(dependentName2);
-                    customerService.add(dependent2);
+                    String dependentName = customerData.get(CustomerView.DEPENDENT_NAME);
+                    Dependent dependent = new Dependent(dependentName);
+                    addInsuranceCard(dependent);
+                    customerService.add(dependent);
 
-                    String policyId = data.get(CustomerView.POLICY_ID);
+                    String policyId = customerData.get(CustomerView.POLICY_ID);
                     Customer customer = customerService.getOne(policyId);
                     if(customer instanceof PolicyHolder){
-                        ((PolicyHolder) customer).addDependent(dependent2);
-                        dependent2.setPolicyHolder((PolicyHolder) customer);
+                        ((PolicyHolder) customer).addDependent(dependent);
+                        dependent.setPolicyHolder((PolicyHolder) customer);
                     } else if (customer instanceof Dependent) {
                         System.out.println("This is a dependent ID. Cannot add a dependent to another dependent.");
                     }
                     else{
                         System.out.println("No policy holder found with the provided ID.");
                     }
+
+                    customerView.display(dependent);
+                    System.out.println("Successfully added the customer");
                     break;
             }
-        System.out.println("Successfully added the customer");
-        System.out.println("Do you want to add another customer? (Y/N): ");
+
+        System.out.println("\nDo you want to add another customer? (Y/N): ");
         answer = scanner.nextLine();
         }
+    }
+
+    public void addInsuranceCard(Customer customer){
+        Map<String, String> data = insuranceCardView.displayNewInsuranceCardForm();
+        String policyOwner = data.get(InsuranceCardView.POLICY_OWNER);
+        int year = Integer.parseInt(data.get(InsuranceCardView.YEAR));
+
+        // adjust month value for Calendar
+        int month = Integer.parseInt(data.get(InsuranceCardView.MONTH)) - 1;
+        int day = Integer.parseInt(data.get(InsuranceCardView.DAY));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        InsuranceCard insuranceCard = new InsuranceCard(policyOwner, calendar.getTime());
+        insuranceCardService.add(insuranceCard);
+        customer.setInsuranceCard(insuranceCard);
     }
 }

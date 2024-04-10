@@ -47,7 +47,8 @@ public class Dependent extends Customer{
     public String toString() {
         return "\nDependent ID: " + getId() +
                 "\nFullName: " + getFullName() +
-                "\nPolicy Holder: " + getPolicyHolderName()
+                "\nPolicy Holder: " + getPolicyHolderName() +
+                "\nInsurance Card: " + getInsuranceCard()
                 ;
     }
 }

@@ -73,16 +73,12 @@ public abstract class Customer{
      *
      * If the conditions are met, the method assigns the insurance card to the customer and sets the customer as the cardHolder.
      */
-    public boolean setInsuranceCard(InsuranceCard insuranceCard){
+    public void setInsuranceCard(InsuranceCard insuranceCard){
         // Check if the insurance card is already assigned or if the customer already has a card
-        if(insuranceCard.getCardHolder() != null || this.getInsuranceCard() != null){
-            return false;
+        if(insuranceCard.getCardHolder() == null || this.getInsuranceCard() == null){
+            this.insuranceCard = insuranceCard;
+            insuranceCard.setCardHolder(this);
         }
-
-        // Assign the insurance card and set the customer as the cardHolder
-        this.insuranceCard = insuranceCard;
-        insuranceCard.setCardHolder(this);
-        return true;
     }
 
     public String getClaimsText(){

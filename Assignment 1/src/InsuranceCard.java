@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ public class InsuranceCard{
     public InsuranceCard(String policyOwner, Date expirationDate) {
         this.cardNumber = Utilities.generateID("", 10);
         this.policyOwner = policyOwner;
-        this.expirationDate = new Date();
+        this.expirationDate = expirationDate;
     }
 
     public String getCardNumber() {
@@ -60,17 +61,17 @@ public class InsuranceCard{
         return policyOwner;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public String getExpirationDate() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.format(expirationDate);
     }
 
     @Override
     public String toString() {
-        return "InsuranceCard{" +
-                "cardNumber='" + getCardNumber() + '\'' +
-                ", cardHolder='" + getCardHolderName() +
-                ", policyOwner='" + getPolicyOwner() + '\'' +
-                ", expirationDate=" + getExpirationDate() +
-                '}';
+        return "\nInsuranceCard card number: " + getCardNumber() +
+                "\nCard Holder: " + getCardHolderName() +
+                "\nPolicy Owner: " + getPolicyOwner() +
+                "\nExpiration Date: " + getExpirationDate()
+                ;
     }
 }
