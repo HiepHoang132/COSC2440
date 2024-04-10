@@ -2,6 +2,10 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.Map;
 
+/**
+ * @author <Hoang Hua Hiep - s3979137>
+ */
+
 public class CustomerController {
     private CustomerView customerView;
     private InsuranceCardView insuranceCardView;
