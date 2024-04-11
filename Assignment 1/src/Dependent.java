@@ -48,7 +48,8 @@ public class Dependent extends Customer{
         return "\nDependent ID: " + getId() +
                 "\nFullName: " + getFullName() +
                 "\nPolicy Holder: " + getPolicyHolderName() +
-                "\nInsurance Card: " + getInsuranceCard()
+                "\nInsurance Card: " + getInsuranceCard() +
+                "\nClaims:\n " + getClaimsText()
                 ;
     }
 }

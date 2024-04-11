@@ -63,34 +63,19 @@ public class PolicyHolder extends Customer{
         return false;
     }
 
-    /**
-     * This method is used to make a claim on behalf of the policyHolder and its dependents.
-     *
-     * @param insuredPerson The customer who is insured and making the claim.
-     * @param claimAmount The amount that the insured person is claiming.
-     * @param receiverBankingInfo The banking information of the receiver.
-     */
-    public void makeClaim(Customer insuredPerson, String claimAmount, String receiverBankingInfo) {
-        // Create a new claim with the provided parameters
-        Claim newClaim = new Claim(insuredPerson, claimAmount, receiverBankingInfo);
-
-        // Add the new claim to the list of claims of the policyHolder
-        this.getClaims().add(newClaim);
-
-        // Add the new claim to the list of claims of each dependent of the policyHolder
-        for (Dependent dependent : this.getDependents()) {
-            dependent.getClaims().add(newClaim);
+    public void makeClaim(Claim claim){
+        this.getClaims().add(claim);
+        for(Dependent dependent: this.getDependents()){
+            dependent.getClaims().add(claim);
         }
-
-        // Add the new claim to the claimService
-        ClaimService.getInstance().add(newClaim);
     }
 
     @Override
     public String toString() {
         return "\nPolicy Holder ID: " + getId() +
-                "\nFull Name: " + getFullName() +
-                "\nInsurance Card: " + getInsuranceCard() +
-                "\nDependents: " + getDependentName();
+                "\nFull Name: " + getFullName() + getInsuranceCard() +
+                "\nDependents: " + getDependentName() +
+                "\nClaims:\n " + getClaimsText()
+                ;
     }
 }

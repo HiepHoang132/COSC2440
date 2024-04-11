@@ -50,11 +50,8 @@ public abstract class Customer{
         return fullName;
     }
 
-    public String getInsuranceCard() {
-        if(insuranceCard == null){
-            return "None";
-        }
-        return insuranceCard.getCardNumber();
+    public InsuranceCard getInsuranceCard() {
+        return insuranceCard;
     }
 
     public List<Claim> getClaims(){
@@ -84,7 +81,7 @@ public abstract class Customer{
     public String getClaimsText(){
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < claims.size(); i++){
-            sb.append("Claim ").append(i+1).append(": ").append(claims.get(i)).append("\n");
+            sb.append("Claim ").append(i+1).append(": \n").append(claims.get(i)).append("\n");
         }
 
         // Remove the trailing comma and space

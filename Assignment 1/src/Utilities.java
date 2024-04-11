@@ -1,5 +1,8 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * @author <Hoang Hua Hiep - s3979137>
@@ -58,5 +61,29 @@ public class Utilities {
          }
       }
       return null;
+   }
+
+   public static String getValidNumberInput(Scanner sc, String prompt, int min, int max) {
+      String input;
+      while (true) {
+         System.out.println(prompt);
+         input = sc.nextLine();
+         if (input.matches("\\d+")) {
+            int num = Integer.parseInt(input);
+            if(num >= min && num <= max) {
+               break;
+            } else {
+               System.out.println("Invalid input. Please enter a number between " + min + " and " + max);
+            }
+         } else {
+            System.out.println("Invalid input. Please enter a number.");
+         }
+      }
+      return input;
+   }
+
+   public static String formattedDate(Date date){
+      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+      return format.format(date);
    }
 }

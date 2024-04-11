@@ -62,8 +62,7 @@ public class InsuranceCard{
     }
 
     public String getExpirationDate() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(expirationDate);
+        return Utilities.formattedDate(expirationDate);
     }
 
     @Override

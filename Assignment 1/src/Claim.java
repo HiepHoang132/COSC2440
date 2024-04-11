@@ -36,11 +36,11 @@ public class Claim{
      * @param claimAmount The amount that the insured person is claiming.
      * @param receiverBankingInfo The banking information of the receiver.
      */
-    public Claim(Customer insuredPerson, String claimAmount, String receiverBankingInfo) {
+    public Claim(Date claimDate, Customer insuredPerson, String claimAmount, String receiverBankingInfo) {
         this.id = Utilities.generateID("f-", 10);
-        this.claimDate = null;
+        this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
-        this.cardNumber = insuredPerson.getInsuranceCard();
+        this.cardNumber = insuredPerson.getInsuranceCard().getCardNumber();
         this.examDate = null;
         this.documents = new ArrayList<String>();
         this.claimAmount = claimAmount;
@@ -56,7 +56,7 @@ public class Claim{
         if(claimDate == null){
             return "The customer has not claimed yet.";
         }
-        return claimDate.toString();
+        return Utilities.formattedDate(claimDate);
     }
 
     public void setClaimDate(Date claimDate) {
@@ -67,7 +67,7 @@ public class Claim{
         return insuredPerson;
     }
 
-    public String getInsuredPersonName() {  
+    public String getInsuredPersonName() {
         if(insuredPerson == null){
             return "No insured person assigned";
         }
@@ -87,15 +87,24 @@ public class Claim{
 
     public String getExamDate() {
         if(examDate == null){
-            return "This claim has not been examined yet.";
+            return "This claim has not been examined yet";
         }
-        return examDate.toString();
+        return Utilities.formattedDate(examDate);
     }
 
     public void setExamDate(Date examDate) {
         this.examDate = examDate;
+        this.status = "Processing";
     }
 
+    public void closeClaim(){
+        if(this.status.equals("Processing")){
+            this.status = "Done";
+            System.out.println("Claim status updated to 'Done'");
+        } else {
+            System.out.println("Invalid status update. Can only change the status to 'Done' when the claim is in 'Processing' status");
+        }
+    }
     public List<String> getDocuments() {
         return documents;
     }
@@ -150,7 +159,7 @@ public class Claim{
                 "Insured Person: " + getInsuredPersonName() + "\n" +
                 "Card Number: " + getCardNumber() + "\n" +
                 "Exam Date: " + getExamDate() + "\n" +
-                "Documents: \n" + getDocumentText() + "\n" +
+                "Documents: ClaimId_CardNumber_DocumentName.pdf \n" + getDocumentText() + "\n" +
                 "Claim Amount: " + getClaimAmount() + "\n" +
                 "Status: " + getStatus() + "\n" +
                 "Receiver Banking Info: " + getReceiverBankingInfo() + "\n";
